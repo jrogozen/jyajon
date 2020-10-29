@@ -1,17 +1,20 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { jsx, Box, Text, Link } from 'theme-ui';
 import React from 'react';
-import { BlogPostMeta } from '../getAllPosts';
+import { Heading } from 'theme-ui';
+import { BlogPostMeta, dateToTimeAgo } from '../getAllPosts';
 
 const PostHeader = ({ meta, isSnippet }: { meta: BlogPostMeta; isSnippet: boolean }): JSX.Element => (
-    <>
-        <h1>{meta.title}</h1>
+    <Box mt={4}>
+        <Heading as={isSnippet ? 'h2' : 'h1'}>{meta.title}</Heading>
         <div>
-            {isSnippet ? <p>{meta.description}</p> : null}
-            <span>{meta.date}</span>
-            <span role="img" aria-label="one coffee">
-                ☕ {`${meta.readTime} min read`}
-            </span>
+            <Text sx={{ fontWeight: 'bold' }} variant="subContent" mb={4}>
+                by <Link href="#">@jyajon</Link> - {dateToTimeAgo(meta.date)}
+            </Text>
+            {isSnippet ? <Text variant="subContent">{meta.description}</Text> : null}
         </div>
-    </>
+    </Box>
 );
 
 export default PostHeader;

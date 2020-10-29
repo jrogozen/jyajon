@@ -1,7 +1,12 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { jsx, Link as ThemeLink } from 'theme-ui';
 import React from 'react';
+import { Box } from 'theme-ui';
 import Link from 'next/link';
 import PostHeader from './PostHeader';
 import { RequiredBlogPost } from '../getAllPosts';
+import PostBadge from './PostBadge';
 
 const PostSnippet = ({ post }: { post: RequiredBlogPost }): JSX.Element => {
     const {
@@ -11,10 +16,21 @@ const PostSnippet = ({ post }: { post: RequiredBlogPost }): JSX.Element => {
 
     return (
         <article>
-            <PostHeader meta={meta} isSnippet />
-            <Link href={`/blog${link}`}>
-                <a>Read more</a>
-            </Link>
+            <Box variant="content.primary">
+                <PostBadge meta={meta} />
+                <PostHeader meta={meta} isSnippet />
+                <Box
+                    sx={{
+                        borderTop: '1px solid',
+                        borderColor: 'background',
+                        variant: 'subContent.primary',
+                    }}
+                >
+                    <Link href={`/blog${link}`}>
+                        <ThemeLink variant="cta">Read more</ThemeLink>
+                    </Link>
+                </Box>
+            </Box>
         </article>
     );
 };
