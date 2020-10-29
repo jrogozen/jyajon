@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx, Link as ThemeLink } from 'theme-ui';
+import { jsx, Link as ThemeLink, Image } from 'theme-ui';
 import React from 'react';
 import { Box } from 'theme-ui';
 import Link from 'next/link';
@@ -16,6 +16,7 @@ const PostSnippet = ({ post }: { post: RequiredBlogPost }): JSX.Element => {
 
     return (
         <article>
+            <Image src={meta.hero} variant="hero" />
             <Box variant="content.primary">
                 <PostBadge meta={meta} />
                 <PostHeader meta={meta} isSnippet />

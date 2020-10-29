@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx, Box, Container } from 'theme-ui';
+import { jsx, Box, Container, Image } from 'theme-ui';
 import React from 'react';
 import PostHeader from './PostHeader';
 import PostBadge from './PostBadge';
@@ -9,6 +9,7 @@ import PostNav from './PostNav';
 
 const PostFull = ({ children, meta }: { children: JSX.Element; meta: BlogPostMeta }): JSX.Element => (
     <Container>
+        <Image src={meta.hero} variant="hero" />
         <Box variant="content.primary">
             <PostBadge meta={meta} />
             <PostHeader meta={meta} isSnippet={false} />

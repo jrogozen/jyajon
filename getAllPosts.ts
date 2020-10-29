@@ -6,6 +6,7 @@ export type BlogPostMeta = {
     date: Date;
     readTime: string;
     category: string;
+    hero?: string;
 };
 
 export type BlogMdx = {

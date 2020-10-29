@@ -37,6 +37,14 @@ export default {
             color: 'muted',
         },
     },
+    images: {
+        hero: {
+            borderRadius: 4,
+            width: '100%',
+            height: 'auto',
+            marginBottom: '-4px', //hack, remove
+        },
+    },
     links: {
         default: {
             color: 'primary',
