@@ -126,6 +126,15 @@ export default {
         },
     },
     styles: {
+        heroBackground: {
+            borderRadius: 4,
+            borderBottomLeftRadius: 0,
+            borderBottomRightRadius: 0,
+            height: 300,
+            width: '100%',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+        },
         root: {
             fontFamily: 'body',
             lineHeight: 'body',
