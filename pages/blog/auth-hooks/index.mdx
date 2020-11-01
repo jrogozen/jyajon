@@ -33,6 +33,60 @@ first, let's spec out some requirements and assumptions:
 
 ## creating the provider
 
+first, let's make our auth context and auth provider. we'll initialize the context with the results of an api call before rendering.
+
+```
+/**
+* context.js
+**/
+
+import React, { createContext } from 'react';
+
+export const AuthContext = createContext({
+    user: {
+        loggedIn: false,
+        isTwoFactorEnabled: false,
+        isTwoFactorAuthenticated: false,
+        isStrongAuthenticated: false,
+        isBlocked: false,
+    },
+    strongAuthenticationExpirationDate: 0,
+    signign: () => undefined,
+    signout: () => undefined,
+    refreshExpirationDate: () => undefined,
+});
+
+export const createAuthProvider = (args) => {
+    return ({ children }) => {
+        const [user, setUser] = useState(args.user);
+        const [strongAuthenticationExpirationDate, setStrongAuthenticationExpirationDate] = useState(args.strongAuthenticationExpirationDate);
+        const signin = (user) => setUser(user);
+        const signout = () => setUser({
+            loggedIn: false,
+            isTwoFactorEnabled: false,
+            isTwoFactorAuthenticated: false,
+            isStrongAuthenticated: false,
+            isBlocked: false,
+        });
+
+        const refreshExpirationDate = (newDate) => {
+            setSessionExpirationDate(newDate);
+        };
+
+        const auth = {
+            user,
+            signin,
+            signout,
+            strongAuthenticationExpirationDate,
+            refreshExpirationDate,
+        };
+
+        return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+    }
+}
+```
+
+## the hook
 
 
 [^1]: authentication that requires a user has typed their password within the last X minutes.
