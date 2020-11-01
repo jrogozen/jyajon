@@ -11,10 +11,28 @@ export const meta = {
 
 export default ({ children }) => <PostFull meta={meta}>{children}</PostFull>;
 
-## use case
+## what're we making
 
-some stuff.
+a great use case for using React's context and hook api is to create an authentication component. inn this post we'll create a flexible react module that executes callbacks in response to a user's status.
 
-## creating the hook
+first, let's spec out some requirements and assumptions:
 
-ok.
+### requirements
+
+- works for server side rendering and client transitions
+- supports a variety of user statuses (blocked, missing strong auth, ...)
+- does not flash unauthorized content before taking an action
+- supports timer based strong authentication[^1]
+- minimal external dependencies
+
+### assumptions
+
+- server will make a user authentication api call pre-rendering react
+- apis are properly protected regardless of frontend views; frontend authorization makes for a better user experience
+- browser can trust the initial server side auth api call and does not have to re-auth
+
+## creating the provider
+
+
+
+[^1]: authentication that requires a user has typed their password within the last X minutes.
