@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "export": "next export",
-    "lint": "eslint '*/**/*.{js,jsx,ts,tsx,mdx}' --quiet --fix"
+    "lint": "eslint '*/**/*.{js,jsx,ts,tsx}' --quiet --fix"
   },
   "husky": {
     "hooks": {
@@ -15,18 +15,20 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,mdx}": [
+    "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
     ]
   },
   "dependencies": {
+    "@mapbox/rehype-prism": "^0.5.0",
     "@mdx-js/loader": "^1.6.19",
     "@next/mdx": "^10.0.0",
     "date-fns": "^2.16.1",
     "next": "10.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "remark-toc": "^7.0.0",
     "theme-ui": "^0.3.1"
   },
   "devDependencies": {

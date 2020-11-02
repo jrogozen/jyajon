@@ -11,9 +11,11 @@ export const meta = {
 
 export default ({ children }) => <PostFull meta={meta}>{children}</PostFull>;
 
-## what're we making
+## table of contents
 
-a great use case for using React's context and hook api is to create an authentication component. inn this post we'll create a flexible react module that executes callbacks in response to a user's status.
+## getting started
+
+React's context and hook apis are great for creating an auth checker component wrapper. in this post we'll create a flexible react module that executes callbacks in response to a user's status.
 
 first, let's spec out some requirements and assumptions:
 
@@ -27,15 +29,15 @@ first, let's spec out some requirements and assumptions:
 
 ### assumptions
 
-- server will make a user authentication api call pre-rendering react
+- server will make a user authentication api call before running rendering react
 - apis are properly protected regardless of frontend views; frontend authorization makes for a better user experience
 - browser can trust the initial server side auth api call and does not have to re-auth
 
 ## creating the provider
 
-first, let's make our auth context and auth provider. we'll initialize the context with the results of an api call before rendering.
+let's make an auth context and provider. we'll initialize the context with the results of a pre-render api call.
 
-```
+```javascript
 /**
 * context.js
 **/
@@ -87,6 +89,84 @@ export const createAuthProvider = (args) => {
 ```
 
 ## the hook
+
+we'll use this hook in React component's to trigger an authentication check on client load
+
+
+```javascript
+/**
+* hooks.js
+**/
+import React, { useState, useContext } from 'react';
+import { AuthContext } from './context';
+
+function execWithDefault(defaultFunc, ...args) {
+    return (optionalFunc) => {
+        if (optionalFunc) {
+            optionalFunc(...args);
+        } else {
+            defaultFunc(...args);
+        }
+    }
+}
+
+function getRulesFromUser(user, { requiresStrongAuth }) {
+    return {
+        isNotLoggedIn: () => {
+            return !user.loggedIn;
+        },
+        isNotStrongAuthenticated: () => {
+            return requiresStrongAuth && !user.isStrongAuthenticated
+        },
+        isNotTwoFactorAuthenticated: () => {
+            return user.isTwoFactorEnabled && !user.isTwoFactorAuthenticated;
+        },
+
+    }
+}
+
+function executeRedirect(to) {
+    window.location.href = to;
+}
+
+export const useRequireAuth = ({
+    onNotSignedIn,
+    onMissingTwoFactorAuth,
+    onMissingStrongAuth,
+    requiresStrongAuth,
+    currentPathname,
+    queryString,
+    prehook
+}) => {
+    const auth = useContext(AuthContext);
+    const [isLoading, setLoading] = useState(prehook);
+
+    useEffect(() => {
+        if (isLoading) {
+            const pre = async () => {
+                await prehook();
+
+                setIsLoading(false);
+            }
+
+            pre();
+        }
+    }, []);
+
+    useEffect(() => {
+        if (isLoading) {
+            return;
+        }
+
+        const withDefault = execWithDefault(executeRedirect, '/login');
+
+        if ()
+
+    }, [requiresStrongAuth, currentPathname, queryString]);
+
+    return auth;
+}
+```
 
 
 [^1]: authentication that requires a user has typed their password within the last X minutes.

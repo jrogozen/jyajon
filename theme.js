@@ -27,7 +27,7 @@ export default {
         primary: 2,
     },
     sizes: {
-        container: 720,
+        container: 800,
     },
     text: {
         heading: {
@@ -194,6 +194,10 @@ export default {
         pre: {
             fontFamily: 'monospace',
             overflowX: 'auto',
+            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            borderRadius: '3px',
+            wordWrap: 'normal',
+            padding: 3,
             code: {
                 color: 'inherit',
             },
